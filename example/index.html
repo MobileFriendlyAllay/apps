@@ -29,18 +29,34 @@
         h1 {
             color: #333;
         }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- This links to a separate image file you would add to your repo -->
+        <!-- Image linking to a separate file -->
         <img src="logo.png" alt="Example Logo" onerror="this.src='https://via.placeholder.com/150?text=Place+logo.png+here'">
         
         <h1 id="greeting">Loading...</h1>
         <p>This is an example program on GitHub. You are free to use this.</p>
         <button id="action-btn">Click Me</button>
     </div>
+
+    <!-- Audio element for the success sound -->
+    <audio id="success-sound" src="success.mp3" preload="auto"></audio>
 
     <!-- This links to your separate JavaScript file -->
     <script src="script.js"></script>

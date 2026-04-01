@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --battery-color: #10b981;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Prevents scrollbars from the animation */
+            position: relative;
+        }
+
+        /* Canvas stays behind everything */
+        #background-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+            padding: 20px;
+            pointer-events: none; /* Allows clicks to pass through to the background if needed */
+        }
+
+        #time {
+            font-size: 7rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -2px;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            white-space: nowrap;
+        }
+
+        #date {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .status-bar {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .battery-icon {
+            width: 34px;
+            height: 18px;
+            border: 2px solid var(--text-color);
+            border-radius: 4px;
+            position: relative;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 8px;
+            background: var(--text-color);
+            border-radius: 0 2px 2px 0;
+        }
+
+        #battery-level {
+            height: 100%;
+            background-color: var(--battery-color);
+            width: 0%;
+            border-radius: 1px;
+        }
+
+        .charging-icon {
+            fill: #fbbf24;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            #time { font-size: 4rem; }
+            #date { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="background-canvas"></canvas>
+
+    <div class="container">
+        <h1 id="time">--:--:-- --</h1>
+        <div id="date">Loading...</div>
+        
+        <div class="status-bar">
+            <svg class="charging-icon" id="charging-bolt" width="16" height="16" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14H11V21L20 10H13Z" />
+            </svg>
+            <div class="battery-icon">
+                <div id="battery-level"></div>
+            </div>
+            <span id="battery-percent">--%</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

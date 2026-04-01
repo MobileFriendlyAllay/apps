@@ -13,16 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Action when button is clicked
     actionButton.addEventListener('click', () => {
-        // 1. Change text color
-        greetingElement.style.color = '#28a745'; // Green for success
+        // 1. Change text color to green to indicate success
+        greetingElement.style.color = '#28a745'; 
         
         // 2. Play the success.wav file
-        // We reset the time to 0 in case the button is clicked rapidly
+        // Resetting currentTime to 0 allows the sound to restart 
+        // if the button is clicked multiple times in a row.
         successSound.currentTime = 0;
-        successSound.play().catch(error => {
-            console.log("Audio playback failed. Ensure 'success.wav' exists in the folder.");
-        });
+        
+        // We use a Promise-based play call to handle modern browser 
+        // requirements for user-interacted audio.
+        const playPromise = successSound.play();
 
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Sound started successfully
+                console.log("Audio playing successfully.");
+            }).catch(error => {
+                // This usually happens if the file 'success.wav' is missing 
+                // or if the browser blocks the audio.
+                console.error("Playback failed:", error);
+            });
+        }
+
+        // Removed the alert() prompt so the experience is seamless and non-interruptive.
         console.log("Button clicked: Sound triggered and UI updated.");
     });
 });
